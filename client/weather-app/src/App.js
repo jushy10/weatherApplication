@@ -3,10 +3,14 @@ import './App.css';
 import React from 'react';
 
 import { Hello } from './components/hello'
+import PersonComponent from './components/currentAPI'
 
 function App() {
+  
   return (
+  
     <div className="app">
+      <PersonComponent></PersonComponent>
       <h2 className='title'>Weather App</h2>
       <div className="search">
         <input type="text" placeholder="Enter Location"></input>

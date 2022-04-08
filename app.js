@@ -1,6 +1,9 @@
+
 const express = require('express'),
 app = express()
+var cors = require('cors')
 
+app.use(cors()) // Use this after the variable declaration
 
 require('dotenv').config()
 

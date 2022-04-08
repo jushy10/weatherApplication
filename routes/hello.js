@@ -2,9 +2,9 @@
 const express = require('express'),
 router = express.Router(),
 
-hello = require("../controllers/hello.js");
+current = require("../controllers/getCurrent.js");
 
-router.get('/', hello.hello);
+router.get('/', current.testJSON);
 
 
 module.exports = router;
