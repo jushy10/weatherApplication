@@ -1,7 +1,7 @@
 import React from 'react'
 import $ from 'jquery';
 
-export default class PersonComponent extends React.Component {
+export default class ApiComponent extends React.Component {
     constructor(props) {
       super(props);
   
