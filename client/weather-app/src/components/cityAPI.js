@@ -1,12 +1,32 @@
 import axios from 'axios'
-import {useEffect, useState} from 'react';
+import { useState } from 'react';
+import React from 'react';
 
-const cityAPI = () => {
-    const getAPI = () => {
+const CityAPI = () => {
+
+    const [name, setName] = useState(''); //String
+    
+    const handleSubmit = (e) => {
+    
+        e.preventDefault();
+
+        // console.log(`Form submitted, ${name}`); 
+
+        getAPI(name);
+    } 
+
+    const everyChange = (e) => {
+        setName(e.target.value)
+        // console.log("Test")
+
+    }
+
+
+    const getAPI = (name) => {
         const options = {
             method: 'GET',
             url: 'http://localhost:3001/results', //Backend Pull
-            params: {city: 'Toronto'},
+            params: {city: name},
         }
 
         axios.request(options).then((response) => {
@@ -18,12 +38,13 @@ const cityAPI = () => {
         })
     }
 
-    getAPI();
-
         return (
-            <div className="app">
-                Hello
-                {/* response.data */}
+            <div className="app2">
+                <form onSubmit = {handleSubmit}>
+                    <input onChange = {everyChange}></input>
+                    <button type = 'submit'>Submit</button>
+                </form>
+
             </div>
             
         );
@@ -31,5 +52,5 @@ const cityAPI = () => {
 
 }
 
-export default cityAPI;
+export default CityAPI;
 
