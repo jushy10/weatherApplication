@@ -1,10 +1,14 @@
 import axios from 'axios'
 import { useState } from 'react';
 import React from 'react';
+import "../styles/city.css"
 
 const CityAPI = () => {
 
     const [name, setName] = useState(''); //String
+    const [returnedCity, passedCity] = useState('');
+    const [returnedTemp, passedTemp] = useState('');
+   
     
     const handleSubmit = (e) => {
     
@@ -21,6 +25,10 @@ const CityAPI = () => {
 
     }
 
+    const setCityName = (e) => {passedCity(e)}
+    const setTemperature = (e) => {passedTemp(e)}
+
+
 
     const getAPI = (name) => {
         const options = {
@@ -32,6 +40,8 @@ const CityAPI = () => {
         axios.request(options).then((response) => {
             console.log(response.data)
             console.log(response.data.cityName)
+            setCityName(response.data.cityName)
+            setTemperature(response.data.currentTemp)
 
         }).catch((error) => {
             console.error(error)
@@ -39,12 +49,14 @@ const CityAPI = () => {
     }
 
         return (
-            <div className="app2">
+            <div className="search">
                 <form onSubmit = {handleSubmit}>
                     <input onChange = {everyChange}></input>
                     <button type = 'submit'>Submit</button>
                 </form>
 
+               <div className ="city">{returnedCity}</div> 
+               <div className ="temp">{returnedTemp}°C</div> 
             </div>
             
         );
