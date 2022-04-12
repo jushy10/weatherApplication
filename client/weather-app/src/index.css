@@ -31,20 +31,6 @@ h1 {
   font-size: 6rem;
 }
 
-
-/* Common styles via container (top and bottom) */
-.container {
-  max-width: 700px;
-  height: 700px;
-  margin: auto;
-  padding: 0 1rem;
-  position: relative;
-  top: 15%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
 /* App components */
 .app {
   width: 100%;
@@ -62,57 +48,11 @@ h1 {
   z-index: -1;
 }
 
-.app .description {
-  position: relative;
-  margin: auto;
-  width: 60%;
-  border: 5px solid #6f00ff;
-  padding: 10px;
-  text-align: center;
-}
-
-.app .location {
-  display: flex;
-  justify-content: space-evenly;
-  text-align: center;
-  width: 100%;
-  padding: 1rem;
-}
-
-.app .temp {
-  display: flex;
-  justify-content: space-evenly;
-  text-align: center;
-  width: 100%;
-  padding: 1rem;
-}
-
-.app .bottom {
-  display: flex;
-  justify-content: space-evenly;
-  text-align: center;
-  width: 100%;
-  margin: 1rem auto;
-  padding: 1rem;
-  border-radius: 12px;
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
 .app .title {
   position: absolute;
   left: 50px;
   top: 20px;
   left: 30px;
-}
-
-.bold {
-  font-weight: 700;
-}
-
-/* Search Bar */
-.app .search {
-  text-align: center;
-  padding: 1rem;
 }
 
 .app input {

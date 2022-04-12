@@ -44,6 +44,8 @@ exports.testJSON = async (req, res) => {
         condition: data.current.condition.text,
         humidity: data.current.humidity,
         icon: data.current.condition.icon,
+        feelslike: data.current.feelslike_c,
+        wind: data.current.wind_kph,
       })
     );
   };

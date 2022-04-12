@@ -58,6 +58,8 @@ app.get('/results', (req,res) => {
                 condition: response.data.current.condition.text,
                 humidity: response.data.current.humidity,
                 icon: response.data.current.condition.icon,
+                feelslike: response.data.current.feelslike_c,
+                wind: response.data.current.wind_kph,
             })
             )
 
