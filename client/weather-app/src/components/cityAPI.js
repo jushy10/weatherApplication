@@ -35,8 +35,7 @@ const CityAPI = () => {
         }
 
         axios.request(options).then((response) => {
-            // console.log(response.data)
-            // console.log(response.data.cityName)
+           
             setCity(response.data.cityName)
             setTemp(response.data.currentTemp + '°C')
             setCond(response.data.condition)
