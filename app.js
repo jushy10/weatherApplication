@@ -54,6 +54,7 @@ app.get('/results', (req,res) => {
         res.end (
             JSON.stringify({
                 cityName: response.data.location.name,
+                countryName: response.data.location.country,
                 currentTemp: response.data.current.temp_c,
                 condition: response.data.current.condition.text,
                 humidity: response.data.current.humidity,

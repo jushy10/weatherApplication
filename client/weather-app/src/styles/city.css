@@ -86,6 +86,11 @@ h1 {
   font-weight: 700;
 }
 
+.image {
+  max-width: 500%;
+  max-height: 500%;
+}
+
 /* Search Bar */
 .search {
   text-align: center;

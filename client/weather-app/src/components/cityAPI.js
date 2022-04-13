@@ -6,39 +6,26 @@ import "../styles/city.css"
 const CityAPI = () => {
 
     const [name, setName] = useState(''); //String
-    const [returnedCity, passedCity] = useState('');
-    const [returnedTemp, passedTemp] = useState('');
-
-    const [returnedCondition, passedCond] = useState('');
-    const [returnedConditionIcon, passedIcon] = useState('');
-    const [returnedFeelsLike, passedFeelsLike] = useState('');
-    const [returnedHumidity, passedHumidity] = useState('');
-    const [returnedWind, passedWind] = useState('');
-
+    const [city, setCity] = useState('');
+    const [temp, setTemp] = useState('');
+    const [condition, setCond] = useState('');
+    const [conditionIcon, setIcon] = useState('');
+    const [feelsLike, setFeelsLike] = useState('');
+    const [humidity, setHumidity] = useState('');
+    const [wind, setWind] = useState('');
+    const [country, setCountry] = useState('');
 
     const handleSubmit = (e) => {
 
         e.preventDefault();
 
-        // console.log(`Form submitted, ${name}`); 
-
         getAPI(name);
     }
 
     const everyChange = (e) => {
+
         setName(e.target.value)
-        // console.log("Test")
-
     }
-
-    const setCityName = (e) => { passedCity(e) }
-    const setTemperature = (e) => { passedTemp(e) }
-    const setCityCond = (e) => { passedCond(e) }
-    const setCondIcon = (e) => { passedIcon(e) }
-    const setFeelsLike = (e) => { passedFeelsLike(e) }
-    const setHumidity = (e) => { passedHumidity(e) }
-    const setWind = (e) => { passedWind(e) }
-
 
     const getAPI = (name) => {
         const options = {
@@ -48,15 +35,16 @@ const CityAPI = () => {
         }
 
         axios.request(options).then((response) => {
-            console.log(response.data)
-            console.log(response.data.cityName)
-            setCityName(response.data.cityName)
-            setTemperature(response.data.currentTemp)
-            setCityCond(response.data.condition)
-            setCondIcon(response.data.icon)
+            // console.log(response.data)
+            // console.log(response.data.cityName)
+            setCity(response.data.cityName)
+            setTemp(response.data.currentTemp + '°C')
+            setCond(response.data.condition)
+            setIcon(response.data.icon)
             setFeelsLike(response.data.feelslike)
             setHumidity(response.data.humidity)
             setWind(response.data.wind)
+            setCountry(response.data.countryName)
 
         }).catch((error) => {
             console.error(error)
@@ -71,28 +59,30 @@ const CityAPI = () => {
             <div className='container'>
                 <div className='top'>
                     <div className='location'>
-                        <p>{returnedCity}</p>
+                        <p>{city}, {country}</p>
                     </div>
                     <div className='temp'>
-                        <h1>{returnedTemp}°C</h1>
+                        <h1>{temp}</h1>
                     </div>
                     <div className='description'>
-                        <p>{returnedCondition}</p>
-                        <img src={returnedConditionIcon}></img>
+                        <p>{condition}</p>
+                        <div className='image'>
+                            <img src={conditionIcon} alt=''></img>
+                        </div>
                     </div>
                 </div>
 
                 <div className='bottom'>
                     <div className='feels'>
-                        <p className='bold'>{returnedFeelsLike}°C</p>
+                        <p className='bold'>{feelsLike}°C</p>
                         <p>Feels Like</p>
                     </div>
                     <div className='humidity'>
-                        <p className='bold'>{returnedHumidity}%</p>
+                        <p className='bold'>{humidity}%</p>
                         <p>Humidity</p>
                     </div>
                     <div className='wind'>
-                        <p className='bold'>{returnedWind}KM/H</p>
+                        <p className='bold'>{wind} km/h</p>
                         <p>Wind Speed</p>
                     </div>
                 </div>
