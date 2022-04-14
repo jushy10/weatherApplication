@@ -30,7 +30,7 @@ const CityAPI = () => {
     const getAPI = (name) => {
         const options = {
             method: 'GET',
-            url: 'http://localhost:3001/results', //Backend Pull
+            url: 'http://localhost:3001/cityAPI', //Backend Pull
             params: { city: name },
         }
 

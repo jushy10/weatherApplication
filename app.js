@@ -1,4 +1,3 @@
-
 const express = require('express'),
 app = express()
 var cors = require('cors')
@@ -27,15 +26,8 @@ app.post('/store-data', (req, res) => {
     console.log(data);
 });
 
-// app.get('/results', (req, res) => {
-//     res.json('results');
-// })
-
-
-app.get('/results', (req,res) => {
+app.get('/cityAPI', (req, res) => {
     const passedCity = req.query.city;
-    // console.log(passedCity);
-
     const options = {
         method: 'GET',
         url: 'http://api.weatherapi.com/v1/current.json?key=d5ccf290643547b2aa3190009220604&q=' + passedCity + '&aqi=yes',
@@ -47,10 +39,6 @@ app.get('/results', (req,res) => {
     }
 
     axios.request(options).then((response) => {
-        // res.json(response.data.location.country)
-        // res.json(response.data.current.temp_c)
-        // res.json(response.data)
-
         res.end (
             JSON.stringify({
                 cityName: response.data.location.name,
@@ -61,6 +49,31 @@ app.get('/results', (req,res) => {
                 icon: response.data.current.condition.icon,
                 feelslike: response.data.current.feelslike_c,
                 wind: response.data.current.wind_kph,
+            })
+            )
+
+    }).catch((error) => {
+        console.error(error)
+    })
+})
+
+
+app.get('/forecastAPI', (req, res) => {
+    const passedCity = req.query.city;
+    const options = {
+        method: 'GET',
+        url: 'http://api.weatherapi.com/v1/forecast.json?key=d5ccf290643547b2aa3190009220604&q=' + passedCity + '&days=5&aqi=no&alerts=no',
+        // params: {level: 'Toronto', area: 'sat'},
+        headers: {
+            // 'x-rapidapi-host': 'twinword-word-association-quiz.p.rapidapi.com',
+            // 'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY
+        }
+    }
+
+    axios.request(options).then((response) => {
+        res.end (
+            JSON.stringify({
+                forecast: response.data.forecast.forecastday,
             })
             )
 
