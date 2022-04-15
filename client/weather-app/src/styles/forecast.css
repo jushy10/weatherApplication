@@ -1,0 +1,25 @@
+.weatherIcon{
+    width: 80px;
+    height: 80px;
+    align-self: center;
+}
+
+.weatherRow{
+    margin-left: 100px;
+}
+
+.cardTitle{
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: -10px;
+    font-family: 'Outfit', 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+   
+}
+
+.cardText{
+    font-family: 'Outfit', 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}

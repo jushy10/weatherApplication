@@ -3,6 +3,7 @@ import { useState } from 'react';
 import React from 'react';
 import "../styles/city.css"
 
+
 const CityAPI = () => {
 
     const [name, setName] = useState(''); //String
@@ -51,43 +52,45 @@ const CityAPI = () => {
     }
 
     return (
-        <div className="search">
-            <form onSubmit={handleSubmit}>
-                <input onChange={everyChange} placeholder="Enter Location"></input>
-            </form>
+      <div className='app'>
+            <div className="search">
+                <form onSubmit={handleSubmit}>
+                    <input onChange={everyChange} placeholder="Enter Location"></input>
+                </form>
 
-            <div className='container'>
-                <div className='top'>
-                    <div className='location'>
-                        <p>{city}, {country}</p>
+                <div className='container'>
+                    <div className='top'>
+                        <div className='location'>
+                            <p>{city}, {country}</p>
+                        </div>
+                        <div className='temp'>
+                            <h1 style={{fontSize: "6rem"}}>{temp}</h1>
+                        </div>
+                        <div className='description'>
+                            <p>{condition}</p>
+                            <div className='image'>
+                                <img src={conditionIcon} alt=''></img>
+                            </div>
+                        </div>
                     </div>
-                    <div className='temp'>
-                        <h1>{temp}</h1>
-                    </div>
-                    <div className='description'>
-                        <p>{condition}</p>
-                        <div className='image'>
-                            <img src={conditionIcon} alt=''></img>
+
+                    <div className='bottom'>
+                        <div className='feels'>
+                            <p className='bold'>{feelsLike}°C</p>
+                            <p>Feels Like</p>
+                        </div>
+                        <div className='humidity'>
+                            <p className='bold'>{humidity}%</p>
+                            <p>Humidity</p>
+                        </div>
+                        <div className='wind'>
+                            <p className='bold'>{wind} km/h</p>
+                            <p>Wind Speed</p>
                         </div>
                     </div>
                 </div>
-
-                <div className='bottom'>
-                    <div className='feels'>
-                        <p className='bold'>{feelsLike}°C</p>
-                        <p>Feels Like</p>
-                    </div>
-                    <div className='humidity'>
-                        <p className='bold'>{humidity}%</p>
-                        <p>Humidity</p>
-                    </div>
-                    <div className='wind'>
-                        <p className='bold'>{wind} km/h</p>
-                        <p>Wind Speed</p>
-                    </div>
-                </div>
             </div>
-        </div>
+        </div>   
     );
 
 
