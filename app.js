@@ -62,7 +62,7 @@ app.get('/forecastAPI', (req, res) => {
     const passedCity = req.query.city;
     const options = {
         method: 'GET',
-        url: 'http://api.weatherapi.com/v1/forecast.json?key=d5ccf290643547b2aa3190009220604&q=' + passedCity + '&days=5&aqi=no&alerts=no',
+        url: 'http://api.weatherapi.com/v1/forecast.json?key=d5ccf290643547b2aa3190009220604&q=' + passedCity + '&days=7&aqi=no&alerts=no',
         // params: {level: 'Toronto', area: 'sat'},
         headers: {
             // 'x-rapidapi-host': 'twinword-word-association-quiz.p.rapidapi.com',
@@ -71,12 +71,7 @@ app.get('/forecastAPI', (req, res) => {
     }
 
     axios.request(options).then((response) => {
-        res.end (
-            response.json()
-            // JSON.stringify({
-            //     forecast: response.data.forecast.forecastday,
-            // })
-            )
+        res.json(response.data)
 
     }).catch((error) => {
         console.error(error)
