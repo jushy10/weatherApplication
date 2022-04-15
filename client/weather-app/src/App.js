@@ -4,6 +4,11 @@ import React from 'react';
 import CityAPI from './components/cityAPI';
 import ForecastAPI from './components/forecastAPI';
 
+import TestAPI from './components/testAPI'
+
+
+import ForecastTest from './components/classTest'
+
 import { Nav, Navbar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -17,15 +22,15 @@ function App() {
       <Navbar.Brand className="title" href="/home">Weather App</Navbar.Brand>
       <Nav className="me-auto">
         <Nav.Link className="menu" href="/home">Home</Nav.Link>
-        <Nav.Link className="menu" href="/forecast">Forecast</Nav.Link>
-        {/* <Nav.Link className="menu" href="#pricing">Data</Nav.Link> */}
+        <Nav.Link className="menu" href="/3dforecast">3 Day Forecast</Nav.Link>
+        <Nav.Link className="menu" href="/hourlyforecast">Hourly Forecast</Nav.Link>
       </Nav>
     </Navbar>
     
     
     <Routes>
       <Route path='/home'><div className='app'><CityAPI/></div></Route>
-      <Route path='/forecast'><ForecastAPI/></Route>
+      <Route path='/3dforecast'><TestAPI/></Route>
     </Routes>
 
     </>

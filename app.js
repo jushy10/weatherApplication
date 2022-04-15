@@ -72,9 +72,10 @@ app.get('/forecastAPI', (req, res) => {
 
     axios.request(options).then((response) => {
         res.end (
-            JSON.stringify({
-                forecast: response.data.forecast.forecastday,
-            })
+            response.json()
+            // JSON.stringify({
+            //     forecast: response.data.forecast.forecastday,
+            // })
             )
 
     }).catch((error) => {
