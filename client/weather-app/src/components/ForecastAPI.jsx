@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-import { Card, Button } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 class ForecastAPI extends Component {
@@ -42,33 +42,26 @@ everyChange = (e) => {
 
 
 render() {
-	const { jsonData } = this.state;
 	return (
-	<>
+		<>
 		<form onSubmit={this.handleSubmit}>
-		<input onChange={this.everyChange} placeholder="Enter Location"></input>
+			<input onChange={this.everyChange} placeholder="Enter Location"></input>
 		</form>
 
 		<div>
-		{jsonData && jsonData.map(todo => {
+		{this.state.jsonData && this.state.jsonData.map(data => {
 			return (
 				<>
-				<p> Average Temperature: {todo.day.avgtemp_c}</p>
-				<Card style={{ width: '18rem' }}>
-					<Card.Img variant="top" src="holder.js/100px180" />
+				<Card style={{ width: '18rem', display: 'flex', flexDirection: 'row' }}>
+					<Card.Img variant="top" src={data.day.condition.icon} />
 					<Card.Body>
-						<Card.Title>Card Title</Card.Title>
-						<Card.Text>
-						Some quick example text to build on the card title and make up the bulk of
-						the card's content.
-						</Card.Text>
-						<Button variant="primary">Go somewhere</Button>
+						<Card.Title>{data.date}</Card.Title>
+						<Card.Text>Average Temp: {data.day.avgtemp_c}</Card.Text>
+						<Card.Text>Average Temp: {data.day.avgtemp_c}</Card.Text>
 					</Card.Body>
-					</Card>
+				</Card>
 				
 				</>
-
-
 
 			);
 		})}
