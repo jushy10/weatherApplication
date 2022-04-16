@@ -1,8 +1,9 @@
 import './App.css';
 import React from 'react';
 
-import CityAPI from './components/cityAPI';
-import ForecastAPI from './components/ForecastAPI'
+import HomePage from './components/HomePage';
+import ThreeDayForecast from './components/ThreeDayForecast'
+import HourlyForecast from './components/HourlyForecast';
 
 import { Nav, Navbar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -24,8 +25,9 @@ function App() {
     
     
     <Routes>
-      <Route path='/home'><div className='app'><CityAPI/></div></Route>
-      <Route path='/3dforecast'><ForecastAPI/></Route>
+      <Route path='/home'><div className='app'><HomePage/></div></Route>
+      <Route path='/3dforecast'><ThreeDayForecast/></Route>
+      <Route path='/hourlyforecast'><HourlyForecast/></Route>
     </Routes>
 
     </>

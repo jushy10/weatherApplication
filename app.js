@@ -78,6 +78,26 @@ app.get('/forecastAPI', (req, res) => {
     })
 })
 
+app.get('/hourlyForecast', (req, res) => {
+    const passedCity = req.query.city;
+    const options = {
+        method: 'GET',
+        url: 'http://api.weatherapi.com/v1/forecast.json?key=d5ccf290643547b2aa3190009220604&q=' + passedCity + '&days=1&aqi=no&alerts=no',
+        // params: {level: 'Toronto', area: 'sat'},
+        headers: {
+            // 'x-rapidapi-host': 'twinword-word-association-quiz.p.rapidapi.com',
+            // 'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY
+        }
+    }
+
+    axios.request(options).then((response) => {
+        res.json(response.data)
+
+    }).catch((error) => {
+        console.error(error)
+    })
+})
+
 
 
 
