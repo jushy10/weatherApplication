@@ -50,8 +50,9 @@ everyChange = (e) => {
 
 render() {
 	return (
+		<div className='app'>
 		<>
-		<form onSubmit={this.handleSubmit}>
+		<form className='search' onSubmit={this.handleSubmit}>
 			<input onChange={this.everyChange} placeholder="Enter Location"></input>
 		</form>
 
@@ -64,14 +65,17 @@ render() {
 				<>
 				&emsp;&emsp;
 				<Col>
-				
-				<Card border="success" class="weatherCard" bg='dark' text='light' style={{ width: '5rem', display: 'flex', flexDirection: 'column'}}>
+				<div className='container'>
+				<div className='bottom'>
+				<Card border="success" class="weatherCard" bg='transparent' text='light' style={{border: 'none', width: '10rem', display: 'flex', flexDirection: 'column'}}>
 					{/* <Card.Img class="weatherIcon" variant="top" src={data.day.condition.icon} /> */}
 					<Card.Body>
 						<Card.Text class="cardText">Time: {data.time} </Card.Text>
 
 					</Card.Body>
 				</Card>
+				</div>
+				</div>
 				</Col>
 				</>
 
@@ -81,7 +85,7 @@ render() {
 		</Row>
 		</div>
 
-	</>
+	</></div>
 	);
 }
 }
