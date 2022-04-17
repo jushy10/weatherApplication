@@ -1,106 +1,124 @@
 import axios from 'axios'
-import { useState } from 'react';
-import React from 'react';
+import React, {Component} from 'react';
 import "../styles/city.css"
 
 
-const HomePage = () => {
+class HomePage extends Component {
+constructor() {
+    super();
+	this.state = {
+        isSubmitted: false
+	};
+}
 
-    const [name, setName] = useState(''); //String
-    const [city, setCity] = useState('');
-    const [temp, setTemp] = useState('');
-    const [condition, setCond] = useState('');
-    const [conditionIcon, setIcon] = useState('');
-    const [feelsLike, setFeelsLike] = useState('');
-    const [humidity, setHumidity] = useState('');
-    const [wind, setWind] = useState('');
-    const [country, setCountry] = useState('');
 
-    const handleSubmit = (e) => {
+handleInputChange(cityName) {
+    // this.props.changeCity(input)
+	window.localStorage.setItem('cityName', JSON.stringify(cityName))
+}
 
-        e.preventDefault();
+async componentDidMount() {
+	if (this.props.cityInput !== null) {
+		await this.setState({ city: this.props.cityInput });
+		this.forecastAPI();
+	}
+    this.setState({isSubmitted: true})
 
-        getAPI(name);
-    }
+}
 
-    const everyChange = (e) => {
+async forecastAPI() {
+	const options = {
+		method: 'GET',
+		url: 'http://localhost:3001/cityAPI', //Backend Pull
+		params: { city: this.state.city },
+	}
 
-        setName(e.target.value)
-    }
+	const data = await axios.request(options)
+	.then(function (response) {
+		return response.data;
+	})
+	.catch(function (error) {
+		console.log(error);
+	});
 
-    const getAPI = (name) => {
-        const options = {
-            method: 'GET',
-            url: 'http://localhost:3001/cityAPI', //Backend Pull
-            params: { city: name },
-        }
+    this.setState({city: data.cityName + ','});
+    this.setState({temp: data.currentTemp + '°C'});
+    this.setState({condition: data.condition});
+    this.setState({icon: data.icon});
+    this.setState({feelsLike: data.feelslike + '°C'});
+    this.setState({humidity: data.humidity + '%'});
+    this.setState({wind: data.wind + ' km/h'});
+    this.setState({country: data.countryName});
+}
 
-        axios.request(options).then((response) => {
+handleSubmit = (e) => {
 
-            setCity(response.data.cityName + ',')
-            setTemp(response.data.currentTemp + '°C')
-            setCond(response.data.condition)
-            setIcon(response.data.icon)
-            setFeelsLike(response.data.feelslike + '°C')
-            setHumidity(response.data.humidity + '%')
-            setWind(response.data.wind + ' km/h')
-            setCountry(response.data.countryName)
+    this.setState({isSubmitted: true})
+	e.preventDefault();
+	this.forecastAPI();
+	this.handleInputChange(this.state.city);
+    
 
-        }).catch((error) => {
-            console.error(error)
-        })
-    }
+}
 
+everyChange = (e) => {
+	this.setState({ city: e.target.value });
+    this.setState({isSubmitted: false})
+}
+
+
+render() {
     return (
       <div className='app'>
             <div className="search">
-                <form onSubmit={handleSubmit}>
-                    <input onChange={everyChange} placeholder="Enter Location"></input>
+                <form onSubmit={this.handleSubmit}>
+                    <input onChange={this.everyChange} placeholder="Enter Location"></input>
                 </form>
-
+                {this.state.isSubmitted &&
                 <div className='container'>
                     <div className='top'>
                         <div className='location'>
-                            <p>{city} {country}</p>
+                            <p>{this.state.city} {this.state.country}</p>
                         </div>
                         <div className='temp'>
-                            <h1 style={{fontSize: "6rem"}}>{temp}</h1>
+                            <h1 style={{fontSize: "6rem"}}>{this.state.temp}</h1>
                         </div>
                         <div className='description'>
-                            <p>{condition}</p>
+                            <p>{this.state.condition}</p>
                             <div className='image'>
-                                <img src={conditionIcon} alt=''></img>
+                                <img src={this.state.icon} alt=''></img>
                             </div>
                         </div>
                     </div>
 
-                    {feelsLike !== '' && humidity !== '' && wind !== '' &&
+                    {this.state.feelsLike !== null && this.state.humidity !== null && this.state.wind !== null &&
                     <div className='bottom'>
                         <div className='feels'>
-                            <p className='bold'>{feelsLike}</p>
-                            {feelsLike !== '' &&
+                            <p className='bold'>{this.state.feelsLike}</p>
+                            {this.state.feelsLike !== '' &&
                             <p>Feels Like</p>
                             }
                         </div>
                         <div className='humidity'>
-                            <p className='bold'>{humidity}</p>
-                            {humidity !== '' &&
+                            <p className='bold'>{this.state.humidity}</p>
+                            {this.state.humidity !== null &&
                             <p>Humidity</p>
                             }
                         </div>
                         <div className='wind'>
-                            <p className='bold'>{wind}</p>
-                            {wind !== '' &&
+                            <p className='bold'>{this.state.wind}</p>
+                            {this.state.wind !== null &&
                             <p>Wind Speed</p>
                             }
                         </div>
                     </div>
-                    }
-                    
+                    }    
                 </div>
+                }
             </div>
         </div>   
     );
+    }
 
 
 }

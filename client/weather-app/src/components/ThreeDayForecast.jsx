@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-import { Card, Row, Col, Container } from 'react-bootstrap';
+import { Card, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "../styles/forecast.css"
 
@@ -12,10 +12,24 @@ constructor() {
 	};
 }
 
+handleInputChange(cityName) {
+    // this.props.changeCity(input)
+	window.localStorage.setItem('cityName', JSON.stringify(cityName))
+}
+
+
 getDayOfWeek(date) {
     const dayOfWeek = new Date(date).getDay();
     return isNaN(dayOfWeek) ? null : 
       ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][dayOfWeek];
+}
+
+async componentDidMount() {
+	if (this.props.cityInput !== null) {
+		await this.setState({ cityName: this.props.cityInput });
+		this.forecastAPI();
+	}
+
 }
 
 async forecastAPI() {
@@ -39,6 +53,7 @@ handleSubmit = (e) => {
 
 	e.preventDefault();
 	this.forecastAPI();
+	this.handleInputChange(this.state.cityName);
 
 }
 
@@ -49,13 +64,12 @@ everyChange = (e) => {
 
 
 render() {
-
 	return (
 		<div className='app'>
 		<>
 		<form className="search" onSubmit={this.handleSubmit}>
 			<input onChange={this.everyChange} placeholder="Enter Location"></input>
-		</form>
+		</form> 
 
 		<div>
 		<br></br><br></br><br></br>	
@@ -74,8 +88,8 @@ render() {
 						<Card.Title class="cardTitle">{this.getDayOfWeek(data.date)}</Card.Title>
 						<Card.Text class="cardText">Condition: {data.day.condition.text}</Card.Text>
 						<Card.Text class="cardText"> Average Temp: {data.day.avgtemp_c}°C 
-						<br></br>Maximum Temperature: {data.day.maxtemp_c}°C
-						<br></br>Minimum Temperature: {data.day.mintemp_c}°C
+						<br></br>Max Temp: {data.day.maxtemp_c}°C
+						<br></br>Min Temp: {data.day.mintemp_c}°C
 						<br></br>Chance of Rain: {data.day.daily_chance_of_rain}%
 
 

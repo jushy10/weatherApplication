@@ -12,6 +12,21 @@ constructor() {
 	};
 }
 
+handleInputChange(cityName) {
+    // this.props.changeCity(input)
+	window.localStorage.setItem('cityName', JSON.stringify(cityName))
+}
+
+
+async componentDidMount() {
+	if (this.props.cityInput !== null) {
+		// console.log(this.props.cityInput)
+		await this.setState({ cityName: this.props.cityInput });
+		this.forecastAPI();
+	}
+
+}
+
 getDayOfWeek(date) {
     const dayOfWeek = new Date(date).getDay();
     return isNaN(dayOfWeek) ? null : 
@@ -39,6 +54,7 @@ handleSubmit = (e) => {
 
 	e.preventDefault();
 	this.forecastAPI();
+	this.handleInputChange(this.state.cityName);
 
 }
 

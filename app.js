@@ -72,6 +72,7 @@ app.get('/forecastAPI', (req, res) => {
 
     axios.request(options).then((response) => {
         res.json(response.data)
+        res.end();
 
     }).catch((error) => {
         console.error(error)
@@ -92,6 +93,7 @@ app.get('/hourlyForecast', (req, res) => {
 
     axios.request(options).then((response) => {
         res.json(response.data)
+        res.end();
 
     }).catch((error) => {
         console.error(error)
