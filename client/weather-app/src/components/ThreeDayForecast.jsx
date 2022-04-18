@@ -18,6 +18,7 @@ handleInputChange(cityName) {
 }
 
 
+
 getDayOfWeek(date) {
     const dayOfWeek = new Date(date).getDay();
     return isNaN(dayOfWeek) ? null : 

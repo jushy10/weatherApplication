@@ -13,9 +13,9 @@ constructor() {
 
 
 handleInputChange(cityName) {
-    // this.props.changeCity(input)
 	window.localStorage.setItem('cityName', JSON.stringify(cityName))
 }
+
 
 async componentDidMount() {
 	if (this.props.cityInput !== null) {
@@ -41,7 +41,7 @@ async forecastAPI() {
 		console.log(error);
 	});
 
-    this.setState({city: data.cityName + ','});
+    this.setState({city: data.cityName + ' '});
     this.setState({temp: data.currentTemp + '°C'});
     this.setState({condition: data.condition});
     this.setState({icon: data.icon});
@@ -91,7 +91,7 @@ render() {
                         </div>
                     </div>
 
-                    {this.state.feelsLike !== null && this.state.humidity !== null && this.state.wind !== null &&
+                    {this.state.feelsLike !== '' && this.state.humidity !== '' && this.state.wind !== '' &&
                     <div className='bottom'>
                         <div className='feels'>
                             <p className='bold'>{this.state.feelsLike}</p>
@@ -101,13 +101,13 @@ render() {
                         </div>
                         <div className='humidity'>
                             <p className='bold'>{this.state.humidity}</p>
-                            {this.state.humidity !== null &&
+                            {this.state.humidity !== '' &&
                             <p>Humidity</p>
                             }
                         </div>
                         <div className='wind'>
                             <p className='bold'>{this.state.wind}</p>
-                            {this.state.wind !== null &&
+                            {this.state.wind !== '' &&
                             <p>Wind Speed</p>
                             }
                         </div>
