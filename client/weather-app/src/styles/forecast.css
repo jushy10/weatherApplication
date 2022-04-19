@@ -24,6 +24,13 @@
     sans-serif;
 }
 
+.cardText24{
+    font-family: 'Outfit', 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    font-size: 11px;
+}
+
 .container {
     max-width: 700px;
     height: 700px;
@@ -37,6 +44,17 @@
 }
 
   
+.app .bottomHour {
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+    width: 100px;
+    margin: 1rem auto;
+    padding: 1rem;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
 .app .bottom {
     display: flex;
     justify-content: space-evenly;
@@ -48,3 +66,13 @@
     background-color: rgba(255, 255, 255, 0.2);
 }
   
+.weatherTime{
+    font-size:20px;
+}
+
+p{
+    font-family: 'Outfit', 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    font-size:18px;
+}

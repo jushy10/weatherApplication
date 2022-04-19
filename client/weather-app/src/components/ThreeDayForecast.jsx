@@ -83,7 +83,7 @@ render() {
 				<Col>
 				<div className='container'>
 				<div className='bottom'>
-				<Card border="transparent" class="weatherCard" bg='transparent' text='light' style={{ width: '25rem', display: 'flex', flexDirection: 'column', border: 'none'}}>
+				<Card border="transparent" class="weatherCard" bg='transparent' text='light' style={{width: '25rem', display: 'flex', flexDirection: 'column', border: 'none'}}>
 					<Card.Img class="weatherIcon" variant="top" src={data.day.condition.icon} />
 					<Card.Body>
 						<Card.Title class="cardTitle">{this.getDayOfWeek(data.date)}</Card.Title>

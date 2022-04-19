@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-import { Card, Row, Col } from 'react-bootstrap';
+import { Card, Row, Col, Grid } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "../styles/forecast.css"
 
@@ -10,6 +10,16 @@ constructor() {
 	super();
 	this.state = {
 	};
+}
+
+getTime(epoch){
+	var myDate = new Date(epoch*1000);
+	if (myDate.toLocaleString().split(',')[1].length == 11){
+		return(myDate.toLocaleString().split(',')[1].split(' ')[1].slice(0, 4)) + myDate.toLocaleString().split(',')[1].split(' ')[2];	
+	}
+	else{
+		return(myDate.toLocaleString().split(',')[1].split(' ')[1].slice(0, 5)) + myDate.toLocaleString().split(',')[1].split(' ')[2];	
+	}
 }
 
 handleInputChange(cityName) {
@@ -47,8 +57,10 @@ async forecastAPI() {
 	.catch(function (error) {
 		console.log(error);
 	});
-	this.setState({ jsonData: data.forecast.forecastday[0].hour });
+	this.setState({ jsonData: data.forecast.forecastday[0].hour.slice(0, 12) })
+	this.setState({ jsonData2: data.forecast.forecastday[0].hour.slice(12, 24) })
 }
+
 
 handleSubmit = (e) => {
 
@@ -73,37 +85,60 @@ render() {
 		</form>
 
 		<div>
-		<br></br><br></br><br></br>	
+		<br></br><br></br><br></br><br></br>
+		
 		<Row className="card-example d-flex flex-row flex-nowrap overflow-auto">
-		{this.state.jsonData && this.state.jsonData.map(data => {
-			
+		{this.state.jsonData && this.state.jsonData.map(data=> {
 			return (
 				<>
-				&emsp;&emsp;
-				<Col>
-				<div className='container'>
-				<div className='bottom'>
-				<Card border="success" class="weatherCard" bg='transparent' text='light' style={{border: 'none', width: '10rem', display: 'flex', flexDirection: 'column'}}>
-					{/* <Card.Img class="weatherIcon" variant="top" src={data.day.condition.icon} /> */}
-					<Card.Body>
-						<Card.Text class="cardText">Time: {data.time} </Card.Text>
-
-					</Card.Body>
-				</Card>
-				</div>
-				</div>
-				</Col>
-				</>
-
-			);
 			
+				<div className='bottomHour'>
+				<p><b className="weatherTime">{this.getTime(data.time_epoch)}</b>
+			
+				<img src={data.condition.icon}></img>
+				{data.temp_c}°C</p>
+			
+	
+				</div>
+				
+			
+				
+				</>
+				
+			);
 		})}
 		</Row>
+		
+		<Row className="card-example d-flex flex-row flex-nowrap overflow-auto">
+		{this.state.jsonData2 && this.state.jsonData2.map(data2=> {
+			return (
+				<>
+				<Col>
+				<div className='bottomHour'>
+			
+				<p><b className="weatherTime">{this.getTime(data2.time_epoch)}</b>
+
+				
+							
+				<img src={data2.condition.icon}></img>
+				{data2.temp_c}°C</p>
+			
+				</div>
+				
+				</Col>
+				
+				</>
+				
+			);
+		})}
+		</Row>
+		
 		</div>
 
 	</></div>
 	);
 }
 }
+
 
 export default HourlyForecast;
