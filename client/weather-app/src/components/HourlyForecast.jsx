@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Chart as ChartJS } from 'chart.js/auto'
+import { Chart, Line }            from 'react-chartjs-2'
 import axios from "axios";
 
 import { Card, Row, Col, Grid } from 'react-bootstrap';
@@ -10,6 +12,22 @@ constructor() {
 	super();
 	this.state = {
 	};
+
+	this.tempData = [];
+
+	this.chart = {
+		labels: ['12AM', '1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM'
+	, '12PM', '1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM', '11PM'],
+		datasets: [
+		{
+			fill:false,
+			lineTension: 0.5,
+			backgroundColor: 'white',
+      		borderColor: 'black',
+			label: "Temperature",
+			data: this.tempData
+		}]
+	}
 }
 
 getTime(epoch){
@@ -67,12 +85,18 @@ handleSubmit = (e) => {
 	e.preventDefault();
 	this.forecastAPI();
 	this.handleInputChange(this.state.cityName);
+	this.tempData = []
 
 }
 
 everyChange = (e) => {
 
 	this.setState({ cityName: e.target.value });
+	this.tempData = []
+}
+
+addTemp(currentTemp){
+	this.tempData.push(currentTemp);
 }
 
 
@@ -85,7 +109,7 @@ render() {
 		</form>
 
 		<div>
-		<br></br><br></br><br></br><br></br>
+		<br></br><br></br>
 		
 		<Row className="card-example d-flex flex-row flex-nowrap overflow-auto">
 		{this.state.jsonData && this.state.jsonData.map(data=> {
@@ -97,6 +121,7 @@ render() {
 			
 				<img src={data.condition.icon}></img>
 				{data.temp_c}°C</p>
+				{this.addTemp(data.temp_c)}
 			
 	
 				</div>
@@ -122,7 +147,7 @@ render() {
 							
 				<img src={data2.condition.icon}></img>
 				{data2.temp_c}°C</p>
-			
+				{this.addTemp(data2.temp_c)}
 				</div>
 				
 				</Col>
@@ -132,8 +157,39 @@ render() {
 			);
 		})}
 		</Row>
-		
+		<br></br><br></br>
+		<div className='chartBox'>
+		<div style={{ position: "relative", margin: "auto", width: "1250px" }}>
+		<Line className="lineChart" data={this.chart} 
+		options={
+			{title:{ display:true, text:'Daily Temperature'}},
+			{scales: {
+				y: {  
+				  ticks: {
+					color: "white", 
+					font: {
+					  size: 18, 
+					},
+					stepSize: 1,
+					beginAtZero: true
+				  }
+				},
+				x: {  
+					ticks: {
+					  color: "white", 
+					  font: {
+						size: 15, 
+					  },
+					  stepSize: 1,
+					}
+				  }
+			}
+			}}
+			 />
 		</div>
+		</div>
+		</div>
+		
 
 	</></div>
 	);

@@ -76,3 +76,17 @@ p{
     sans-serif;
     font-size:18px;
 }
+
+.lineChart{
+    background-color: none;
+}
+
+.app .chartBox {
+    display: flex;
+    justify-content: space-evenly;
+    width: 1250px;
+    margin: 1rem auto;
+    padding: 1rem;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
