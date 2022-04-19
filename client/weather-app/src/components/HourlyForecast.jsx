@@ -11,23 +11,21 @@ class HourlyForecast extends Component {
 constructor() {
 	super();
 	this.state = {
+		chart: {
+			labels: ['12AM', '1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM'
+			, '12PM', '1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM', '11PM'],
+			datasets: [
+			{
+				fill: false,
+				lineTension: 0.5,
+				backgroundColor: 'white',
+				  borderColor: 'black',
+				label: "Temperature",
+				data: [],
+			}]
+		},
 	};
 
-	this.tempData = [];
-
-	this.chart = {
-		labels: ['12AM', '1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM'
-	, '12PM', '1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM', '11PM'],
-		datasets: [
-		{
-			fill:false,
-			lineTension: 0.5,
-			backgroundColor: 'white',
-      		borderColor: 'black',
-			label: "Temperature",
-			data: this.tempData
-		}]
-	}
 }
 
 getTime(epoch){
@@ -48,7 +46,6 @@ handleInputChange(cityName) {
 
 async componentDidMount() {
 	if (this.props.cityInput !== null) {
-		// console.log(this.props.cityInput)
 		await this.setState({ cityName: this.props.cityInput });
 		this.forecastAPI();
 	}
@@ -68,35 +65,62 @@ async forecastAPI() {
 		params: { city: this.state.cityName },
 	}
 
-	let data = await axios.request(options)
+	let datas = await axios.request(options)
 	.then(function (response) {
 		return response.data;
 	})
 	.catch(function (error) {
 		console.log(error);
 	});
-	this.setState({ jsonData: data.forecast.forecastday[0].hour.slice(0, 12) })
-	this.setState({ jsonData2: data.forecast.forecastday[0].hour.slice(12, 24) })
+
+
+
+	//Cards
+	this.setState({ jsonData: datas.forecast.forecastday[0].hour.slice(0, 12) })
+	this.setState({ jsonData2: datas.forecast.forecastday[0].hour.slice(12, 24) })
+
+
+	//Graph
+
+	if (datas) {
+		datas.forecast.forecastday[0].hour.map(info => 
+			this.state.chart.datasets[0].data.push(info.temp_c)				
+		);
+	}
+
+	console.log(this.state.chart.datasets[0].data);
+
+
 }
 
 
+//Enter Key
 handleSubmit = (e) => {
 
-	e.preventDefault();
-	this.forecastAPI();
-	this.handleInputChange(this.state.cityName);
-	this.tempData = []
-
+	this.setState({chart: {
+		labels: ['12AM', '1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM'
+		, '12PM', '1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM', '11PM'],
+		datasets: [
+		{
+			fill: false,
+			lineTension: 0.5,
+			backgroundColor: 'white',
+			  borderColor: 'black',
+			label: "Temperature",
+			data: [],
+		}]
+	},
+	
+	}, () => {
+		e.preventDefault();
+		this.forecastAPI();
+		this.handleInputChange(this.state.cityName);
+	})
+	
 }
 
 everyChange = (e) => {
-
 	this.setState({ cityName: e.target.value });
-	this.tempData = []
-}
-
-addTemp(currentTemp){
-	this.tempData.push(currentTemp);
 }
 
 
@@ -121,7 +145,6 @@ render() {
 			
 				<img src={data.condition.icon}></img>
 				{data.temp_c}°C</p>
-				{this.addTemp(data.temp_c)}
 			
 	
 				</div>
@@ -147,7 +170,6 @@ render() {
 							
 				<img src={data2.condition.icon}></img>
 				{data2.temp_c}°C</p>
-				{this.addTemp(data2.temp_c)}
 				</div>
 				
 				</Col>
@@ -158,11 +180,14 @@ render() {
 		})}
 		</Row>
 		<br></br><br></br>
+
 		<div className='chartBox'>
 		<div style={{ position: "relative", margin: "auto", width: "1250px" }}>
-		<Line className="lineChart" data={this.chart} 
-		options={
-			{title:{ display:true, text:'Daily Temperature'}},
+
+		<h2>Hourly Temperature</h2>
+		<Line className="lineChart" data={this.state.chart} 
+			options={
+			// {title:{ display:true, text:'Daily Temperature'}},
 			{scales: {
 				y: {  
 				  ticks: {
@@ -188,6 +213,7 @@ render() {
 			 />
 		</div>
 		</div>
+
 		</div>
 		
 
