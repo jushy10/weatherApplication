@@ -80,7 +80,7 @@ render() {
 		<div>
 
 		{this.state.isSubmitted &&
-		<h2 className="cityname"><center> {this.state.cityName} {this.state.region}, {this.state.country}</center></h2>
+		<h2><center> {this.state.cityName} {this.state.region}, {this.state.country}</center></h2>
 		}
 		<br></br>
 		<Row className="card-example d-flex flex-row flex-nowrap overflow-auto">
