@@ -49,6 +49,7 @@ async forecastAPI() {
     this.setState({humidity: data.humidity + '%'});
     this.setState({wind: data.wind + ' km/h'});
     this.setState({country: data.countryName});
+    this.setState({region: data.region});
 }
 
 handleSubmit = (e) => {
@@ -78,7 +79,7 @@ render() {
                 <div className='container'>
                     <div className='top'>
                         <div className='location'>
-                            <p>{this.state.city} {this.state.country}</p>
+                            <p>{this.state.city} {this.state.region}, {this.state.country}</p>
                         </div>
                         <div className='temp'>
                             <h1 style={{fontSize: "6rem"}}>{this.state.temp}</h1>

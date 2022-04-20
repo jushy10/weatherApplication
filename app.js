@@ -49,6 +49,7 @@ app.get('/cityAPI', (req, res) => {
                 icon: response.data.current.condition.icon,
                 feelslike: response.data.current.feelslike_c,
                 wind: response.data.current.wind_kph,
+                region: response.data.location.region,
             })
             )
 

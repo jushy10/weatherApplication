@@ -9,11 +9,11 @@ class ThreeDayForecast extends Component {
 constructor() {
 	super();
 	this.state = {
+		isSubmitted: false,
 	};
 }
 
 handleInputChange(cityName) {
-    // this.props.changeCity(input)
 	window.localStorage.setItem('cityName', JSON.stringify(cityName))
 }
 
@@ -30,6 +30,7 @@ async componentDidMount() {
 		await this.setState({ cityName: this.props.cityInput });
 		this.forecastAPI();
 	}
+	this.setState({isSubmitted: true})
 
 }
 
@@ -48,6 +49,8 @@ async forecastAPI() {
 		console.log(error);
 	});
 	this.setState({ jsonData: data.forecast.forecastday });
+	this.setState({ country: data.location.country})
+	this.setState({ region: data.location.region})
 }
 
 handleSubmit = (e) => {
@@ -55,12 +58,14 @@ handleSubmit = (e) => {
 	e.preventDefault();
 	this.forecastAPI();
 	this.handleInputChange(this.state.cityName);
+	this.setState({isSubmitted: true})
 
 }
 
 everyChange = (e) => {
 
 	this.setState({ cityName: e.target.value });
+	this.setState({isSubmitted: false})
 }
 
 
@@ -73,7 +78,11 @@ render() {
 		</form> 
 
 		<div>
-		<br></br><br></br><br></br>	
+
+		{this.state.isSubmitted &&
+		<h2 className="cityname"><center> {this.state.cityName} {this.state.region}, {this.state.country}</center></h2>
+		}
+		<br></br>
 		<Row className="card-example d-flex flex-row flex-nowrap overflow-auto">
 		{this.state.jsonData && this.state.jsonData.map(data => {
 			
