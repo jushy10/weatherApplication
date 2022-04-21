@@ -90,7 +90,7 @@ render() {
 				<>
 				&emsp;&emsp;
 				<Col>
-				<div className='container'>
+				<div className='container2'>
 				<div className='bottom'>
 				<Card border="transparent" class="weatherCard" bg='transparent' text='light' style={{width: '25rem', display: 'flex', flexDirection: 'column', border: 'none'}}>
 					<Card.Img class="weatherIcon" variant="top" src={data.day.condition.icon} />
