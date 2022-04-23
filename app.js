@@ -14,17 +14,95 @@ app.use(bodyParser.json());
 
 const axios = require('axios')
 
+const { MongoClient, Collection } = require('mongodb');
 
-//add new user
-app.post('/store-data', (req, res) => {
-    let data = res.json();
-    // let sql = "INSERT INTO users SET ?";
-    // let query = conn.query(sql, data,(err, results) => {
-    //   if(err) throw err;
-    //   res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
-    // });
-    console.log(data);
-});
+
+const uri = 'mongodb+srv://jushy:Password123@cluster0.eaqyv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+const client = new MongoClient(uri);
+
+
+async function main() {
+    // const uri = 'mongodb+srv://jushy:Password123@cluster0.eaqyv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+
+    // const client = new MongoClient(uri);
+
+
+    try {
+        await client.connect();
+        console.log("Successfully Connected To MongoDB");
+
+        // await listDatabases(client);
+
+        // await createListing(client, {
+        //     city: "New York",
+        // })
+    }
+    catch (e) {
+        console.error(e);
+    }
+    // finally {
+    //     await client.close();
+    // }
+}
+
+main().catch(console.error);
+
+
+
+// async function listDatabases (client) {
+//     const databaseList = await client.db().admin().listDatabases();
+//     // console.log(databaseList);
+//     console.log("Databases:");
+//     databaseList.databases.forEach(db => {
+//         console.log(` - ${db.name}`);
+//     })
+// }
+
+
+
+
+async function createListing (client, newListing) {
+    //Iterate through all current listings
+    checkIfDuplicate = false;
+    await client.db("CityInputs").collection("cities").find().forEach(
+        function(index) {
+
+            listing = newListing.city
+            index = index.city
+
+            if (listing.toLowerCase() === index.toLowerCase()) {
+                // console.log("Duplicate found");
+                checkIfDuplicate = true;
+            }        
+    });
+    //If there is no duplicate, then insert into db
+    if (checkIfDuplicate === false) {
+        const result = await client.db("CityInputs").collection("cities").insertOne(newListing);
+        console.log(`New Listing Created: ${result.insertedId}`);
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.get('/cityAPI', (req, res) => {
     const passedCity = req.query.city;
@@ -56,6 +134,10 @@ app.get('/cityAPI', (req, res) => {
     }).catch((error) => {
         console.error(error)
     })
+
+    createListing(client, {
+        city: passedCity,
+    })
 })
 
 
@@ -78,6 +160,10 @@ app.get('/forecastAPI', (req, res) => {
     }).catch((error) => {
         console.error(error)
     })
+
+    createListing(client, {
+        city: passedCity,
+    })
 })
 
 app.get('/hourlyForecast', (req, res) => {
@@ -98,6 +184,10 @@ app.get('/hourlyForecast', (req, res) => {
 
     }).catch((error) => {
         console.error(error)
+    })
+
+    createListing(client, {
+        city: passedCity,
     })
 })
 
