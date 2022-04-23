@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import HomePage from './components/HomePage';
 import ThreeDayForecast from './components/ThreeDayForecast'
 import HourlyForecast from './components/HourlyForecast';
+import History from './components/historyPage';
 
 import { Nav, Navbar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -35,6 +36,7 @@ class App extends Component {
           <Nav.Link className="menu" href="/homepage">Home</Nav.Link>
           <Nav.Link className="menu" href="/3dforecast">3 Day Forecast</Nav.Link>
           <Nav.Link className="menu" href="/hourlyforecast">Hourly Forecast</Nav.Link>
+          <Nav.Link className="menu" href="/history">History</Nav.Link>
         </Nav>
       </Navbar>
       </div>
@@ -43,6 +45,7 @@ class App extends Component {
         <Route exact path='/homepage'><div className='app'><HomePage cityInput = {this.state.city} changeCity={this.changeCity}/></div></Route>
         <Route exact path='/3dforecast'><ThreeDayForecast cityInput = {this.state.city} changeCity={this.changeCity}/></Route>
         <Route exact path='/hourlyforecast'><HourlyForecast cityInput = {this.state.city} changeCity={this.changeCity}/></Route>
+        <Route exact path='/history'><History/></Route>
       </Routes>
       
       </>

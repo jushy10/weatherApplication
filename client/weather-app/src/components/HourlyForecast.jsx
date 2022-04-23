@@ -122,6 +122,7 @@ async forecastAPI() {
 	}
 	this.setState({ country: datas.location.country})
 	this.setState({ region: datas.location.region})
+	this.setState({ cities: datas.location.name})
 
 
 
@@ -201,7 +202,7 @@ render() {
 
 		{this.state.isSubmitted &&
 		<>
-		<h2 className="cityname"><center> {this.state.cityName} {this.state.region}, {this.state.country}</center></h2>
+		<h2 className="cityname"><center> {this.state.cities} {this.state.region}, {this.state.country}</center></h2>
 		</>
 		}
 		<center>All Times Relative to EST</center>

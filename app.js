@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 const axios = require('axios')
 
-const { MongoClient, Collection } = require('mongodb');
+const { MongoClient } = require('mongodb');
 
 
 const uri = 'mongodb+srv://jushy:Password123@cluster0.eaqyv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
@@ -22,27 +22,27 @@ const client = new MongoClient(uri);
 
 
 async function main() {
-    // const uri = 'mongodb+srv://jushy:Password123@cluster0.eaqyv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-
-    // const client = new MongoClient(uri);
-
-
     try {
         await client.connect();
         console.log("Successfully Connected To MongoDB");
 
         // await listDatabases(client);
 
-        // await createListing(client, {
-        //     city: "New York",
-        // })
+        //Finds 5 most recent inputs in db
+        // const cursor = client.db("CityInputs").collection("cities").find().limit(5).sort( {$natural:-1} )
+        // await cursor.forEach(
+        //     function(index) {
+        //         console.log(index.city)
+        //     });
+
+
+
+
     }
     catch (e) {
         console.error(e);
     }
-    // finally {
-    //     await client.close();
-    // }
+
 }
 
 main().catch(console.error);
@@ -84,7 +84,25 @@ async function createListing (client, newListing) {
 }
 
 
+app.get('/history', (req, res) => {
+    var arr = [];
+    var itemsProcessed = 0;
+    const cursor = client.db("CityInputs").collection("cities").find().limit(5).sort( {$natural:-1} )
+    cursor.forEach(
+        function(index) {
+            arr.push(index.city)
+            itemsProcessed++;
+            if (itemsProcessed === 5) {
+                afterCursor();
+            }
+        });
 
+    function afterCursor() {
+        res.json(arr)
+        res.end();
+
+    }
+})
 
 
 

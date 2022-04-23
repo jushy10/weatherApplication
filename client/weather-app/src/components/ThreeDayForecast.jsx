@@ -49,6 +49,7 @@ async forecastAPI() {
 		console.log(error);
 	});
 	this.setState({ jsonData: data.forecast.forecastday });
+	this.setState({ cities: data.location.name})
 	this.setState({ country: data.location.country})
 	this.setState({ region: data.location.region})
 }
@@ -80,7 +81,7 @@ render() {
 		<div>
 
 		{this.state.isSubmitted &&
-		<h2><center> {this.state.cityName} {this.state.region}, {this.state.country}</center></h2>
+		<h2><center> {this.state.cities} {this.state.region}, {this.state.country}</center></h2>
 		}
 		<br></br>
 		<Row className="card-example d-flex flex-row flex-nowrap overflow-auto">
