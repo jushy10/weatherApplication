@@ -64,7 +64,7 @@ main().catch(console.error);
 async function createListing (client, newListing) {
     //Iterate through all current listings
     checkIfDuplicate = false;
-    await client.db("CityInputs").collection("cities").find().forEach(
+    await client.db("CityInputs").collection("cities").find().limit(10).sort( {$natural:-1} ).forEach(
         function(index) {
 
             listing = newListing.city
@@ -87,12 +87,12 @@ async function createListing (client, newListing) {
 app.get('/history', (req, res) => {
     var arr = [];
     var itemsProcessed = 0;
-    const cursor = client.db("CityInputs").collection("cities").find().limit(5).sort( {$natural:-1} )
+    const cursor = client.db("CityInputs").collection("cities").find().limit(10).sort( {$natural:-1} )
     cursor.forEach(
         function(index) {
             arr.push(index.city)
             itemsProcessed++;
-            if (itemsProcessed === 5) {
+            if (itemsProcessed === 10) {
                 afterCursor();
             }
         });

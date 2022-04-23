@@ -35,7 +35,7 @@ class History extends Component {
     render() {
         return (
             <>
-            <h1>Recent 5 Lookups</h1>
+            <h1>10 Recent Unique Searches</h1>
             {this.state.dataArray && this.state.dataArray.map((data => (
                 <div>{data}</div>
             )))}
