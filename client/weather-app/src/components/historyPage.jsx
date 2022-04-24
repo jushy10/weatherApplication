@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import axios from "axios";
-
+import "../styles/history.css"
 
 class History extends Component {
     constructor() {
@@ -35,10 +35,16 @@ class History extends Component {
     render() {
         return (
             <>
-            <h1>10 Recent Unique Searches</h1>
+            <div className = "app">
+            <br></br><br></br>
+            <center><h1 >10 Recent Unique Searches</h1></center>
+            <br></br>
+            <div className = "history">
             {this.state.dataArray && this.state.dataArray.map((data => (
-                <div>{data}</div>
+                <h2>{data}</h2>
             )))}
+            </div>
+            </div>
             </>
         ); 
     }
