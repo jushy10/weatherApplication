@@ -35,7 +35,7 @@ class History extends Component {
     render() {
         return (
             <>
-            <div className = "app">
+            <div className = "historypage">
             <br></br><br></br>
             <center><h1 >10 Recent Unique Searches</h1></center>
             <br></br>

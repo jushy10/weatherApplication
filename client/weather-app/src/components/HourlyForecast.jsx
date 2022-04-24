@@ -5,7 +5,7 @@ import axios from "axios";
 
 import { Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import "../styles/forecast.css"
+import "../styles/hourlyforecast.css"
 
 class HourlyForecast extends Component {
 constructor() {
@@ -192,7 +192,7 @@ everyChange = (e) => {
 
 render() {
 	return (
-		<div className='app2'>
+		<div className='hourlyforecast'>
 		<>
 		<form className='search' onSubmit={this.handleSubmit}>
 			<input onChange={this.everyChange} placeholder="Enter Location"></input>

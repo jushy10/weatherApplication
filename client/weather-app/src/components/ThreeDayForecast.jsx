@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { Card, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import "../styles/forecast.css"
+import "../styles/3dayforecast.css"
 
 class ThreeDayForecast extends Component {
 constructor() {
@@ -72,7 +72,7 @@ everyChange = (e) => {
 
 render() {
 	return (
-		<div className='app'>
+		<div className='threedayforecast'>
 		<>
 		<form className="search" onSubmit={this.handleSubmit}>
 			<input onChange={this.everyChange} placeholder="Enter Location"></input>
@@ -91,7 +91,7 @@ render() {
 				<>
 				&emsp;&emsp;
 				<Col>
-				<div className='container2'>
+				<div className='container_threedayforecast'>
 				<div className='bottom'>
 				<Card border="transparent" class="weatherCard" bg='transparent' text='light' style={{width: '25rem', display: 'flex', flexDirection: 'column', border: 'none'}}>
 					<Card.Img class="weatherIcon" variant="top" src={data.day.condition.icon} />

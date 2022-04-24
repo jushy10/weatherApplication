@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, {Component} from 'react';
-import "../styles/city.css"
+import "../styles/homepage.css"
 
 
 class HomePage extends Component {
@@ -70,13 +70,13 @@ everyChange = (e) => {
 
 render() {
     return (
-      <div className='app'>
-            <div className="search">
+      <div className='homepage'>
+            <div className="search_homepage">
                 <form onSubmit={this.handleSubmit}>
                     <input onChange={this.everyChange} placeholder="Enter Location"></input>
                 </form>
                 {this.state.isSubmitted &&
-                <div className='container'>
+                <div className='container_homepage'>
                     <div className='top'>
                         <div className='location'>
                             <p>{this.state.city} {this.state.region}, {this.state.country}</p>
