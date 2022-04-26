@@ -31,6 +31,10 @@ class History extends Component {
         this.setState({dataArray: data})
     }
 
+    buttonInput(input) {
+        sessionStorage.setItem('cityName', JSON.stringify(input))
+    }
+
     render() {
         return (
             <>
@@ -40,7 +44,9 @@ class History extends Component {
             <br></br>
             <div className = "history">
             {this.state.dataArray && this.state.dataArray.map((data => (
-                <h2>{data}</h2>
+                <button type="button" onClick={(e) => this.buttonInput(e.currentTarget.value)} value={data}>{data}</button>
+
+                // <h2>{data}</h2>
             )))}
             </div>
             </div>
