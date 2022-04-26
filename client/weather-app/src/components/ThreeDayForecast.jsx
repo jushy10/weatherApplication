@@ -14,7 +14,7 @@ constructor() {
 }
 
 handleInputChange(cityName) {
-	window.localStorage.setItem('cityName', JSON.stringify(cityName))
+	sessionStorage.setItem('cityName', JSON.stringify(cityName))
 }
 
 
@@ -55,11 +55,18 @@ async forecastAPI() {
 }
 
 handleSubmit = (e) => {
-
+	const regex = new RegExp(`^[a-zA-Z\\s]+$`);
 	e.preventDefault();
-	this.forecastAPI();
-	this.handleInputChange(this.state.cityName);
-	this.setState({isSubmitted: true})
+
+    if (regex.test(this.state.cityName)) {
+        this.setState({isSubmitted: true})
+        this.forecastAPI();
+        this.handleInputChange(this.state.cityName);
+    }
+    else {
+        alert("Input Incorrect \nEx: Toronto");
+		sessionStorage.clear();
+    }
 
 }
 
@@ -80,7 +87,7 @@ render() {
 
 		<div>
 
-		{this.state.isSubmitted &&
+		{this.state.isSubmitted && this.state.cityName !== '' &&
 		<h2><center> {this.state.cities} {this.state.region}, {this.state.country}</center></h2>
 		}
 		<br></br>

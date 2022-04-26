@@ -55,19 +55,20 @@ constructor() {
 
 }
 
+//Converting epoch time to EST time
 getTime(epoch){
 	var myDate = new Date(epoch*1000);
 	if (myDate.toLocaleString().split(',')[1].length === 11){
 		return(myDate.toLocaleString().split(',')[1].split(' ')[1].slice(0, 4)) + myDate.toLocaleString().split(',')[1].split(' ')[2];	
 	}
-	else{
+	else {
 		return(myDate.toLocaleString().split(',')[1].split(' ')[1].slice(0, 5)) + myDate.toLocaleString().split(',')[1].split(' ')[2];	
 	}
 }
 
 handleInputChange(cityName) {
-    // this.props.changeCity(input)
-	window.localStorage.setItem('cityName', JSON.stringify(cityName))
+    //Set input to local storage of browser
+	sessionStorage.setItem('cityName', JSON.stringify(cityName))
 }
 
 
@@ -103,12 +104,12 @@ async forecastAPI() {
 
 
 
-	//Cards
+	//States for Cards
 	this.setState({ jsonData: datas.forecast.forecastday[0].hour.slice(0, 12) })
 	this.setState({ jsonData2: datas.forecast.forecastday[0].hour.slice(12, 24) })
 
 
-	//Graph
+	//States for Graph
 	if (datas) {
 		datas.forecast.forecastday[0].hour.map(info => 
 			this.state.hourlyChart.datasets[0].data.push(info.temp_c) 
@@ -124,15 +125,12 @@ async forecastAPI() {
 	this.setState({ region: datas.location.region})
 	this.setState({ cities: datas.location.name})
 
-
-
 }
 
 
 //Enter Key
 handleSubmit = (e) => {
-	this.setState({isSubmitted: true})
-
+	const regex = new RegExp(`^[a-zA-Z\\s]+$`);
 	this.setState({
 		hourlyChart: {
 			labels: ['12AM', '1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM'
@@ -179,8 +177,15 @@ handleSubmit = (e) => {
 	}});
 
 	e.preventDefault();
-	this.forecastAPI();
-	this.handleInputChange(this.state.cityName);
+    if (regex.test(this.state.cityName)) {
+        this.setState({isSubmitted: true})
+        this.forecastAPI();
+        this.handleInputChange(this.state.cityName);
+    }
+    else {
+        alert("Input Incorrect \nEx: Toronto");
+		sessionStorage.clear();
+    }
 	
 }
 
@@ -200,7 +205,7 @@ render() {
 
 		<div>
 
-		{this.state.isSubmitted &&
+		{this.state.isSubmitted && this.state.cityName !== '' &&
 		<>
 		<h2 className="cityname"><center> {this.state.cities} {this.state.region}, {this.state.country}</center></h2>
 		</>

@@ -10,8 +10,8 @@ class History extends Component {
         };
     }
 
-
     componentDidMount() {
+        //Calls API right away on component mount
         this.forecastAPI();
     }
 
@@ -19,7 +19,6 @@ class History extends Component {
         const options = {
             method: 'GET',
             url: 'http://localhost:3001/history', //Backend Pull
-            // params: { city: this.state.cityName },
         }
     
         let data = await axios.request(options)

@@ -1,6 +1,6 @@
-const express = require('express'),
+const express = require('express')
 app = express()
-var cors = require('cors')
+const cors = require('cors')
 
 app.use(cors()) 
 
@@ -17,27 +17,17 @@ const axios = require('axios')
 const { MongoClient } = require('mongodb');
 
 
+
+//Database Information for Connection
 const uri = 'mongodb+srv://jushy:Password123@cluster0.eaqyv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 const client = new MongoClient(uri);
 
 
+//Func to connect to database
 async function main() {
     try {
         await client.connect();
         console.log("Successfully Connected To MongoDB");
-
-        // await listDatabases(client);
-
-        //Finds 5 most recent inputs in db
-        // const cursor = client.db("CityInputs").collection("cities").find().limit(5).sort( {$natural:-1} )
-        // await cursor.forEach(
-        //     function(index) {
-        //         console.log(index.city)
-        //     });
-
-
-
-
     }
     catch (e) {
         console.error(e);
@@ -48,23 +38,11 @@ async function main() {
 main().catch(console.error);
 
 
-
-// async function listDatabases (client) {
-//     const databaseList = await client.db().admin().listDatabases();
-//     // console.log(databaseList);
-//     console.log("Databases:");
-//     databaseList.databases.forEach(db => {
-//         console.log(` - ${db.name}`);
-//     })
-// }
-
-
-
-
-async function createListing (client, newListing) {
+//Func to create listing if newListing is unique
+async function createListing (newListing) {
     //Iterate through all current listings
     checkIfDuplicate = false;
-    await client.db("CityInputs").collection("cities").find().limit(10).sort( {$natural:-1} ).forEach(
+    await client.db("CityInputs").collection("cities").find().limit(11).sort( {$natural:-1} ).forEach(
         function(index) {
 
             listing = newListing.city
@@ -84,19 +62,21 @@ async function createListing (client, newListing) {
 }
 
 
+//historyPage API Call
 app.get('/history', (req, res) => {
     var arr = [];
     var itemsProcessed = 0;
-    const cursor = client.db("CityInputs").collection("cities").find().limit(10).sort( {$natural:-1} )
+    //Iterate through 10 most recent inputs
+    const cursor = client.db("CityInputs").collection("cities").find().limit(11).sort( {$natural:-1} )
     cursor.forEach(
         function(index) {
             arr.push(index.city)
             itemsProcessed++;
-            if (itemsProcessed === 10) {
+            if (itemsProcessed === 11) {
                 afterCursor();
             }
         });
-
+    //Send Data to Front End
     function afterCursor() {
         res.json(arr)
         res.end();
@@ -105,33 +85,12 @@ app.get('/history', (req, res) => {
 })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//homepage API Call
 app.get('/cityAPI', (req, res) => {
     const passedCity = req.query.city;
     const options = {
         method: 'GET',
         url: 'http://api.weatherapi.com/v1/current.json?key=d5ccf290643547b2aa3190009220604&q=' + passedCity + '&aqi=yes',
-        // params: {level: 'Toronto', area: 'sat'},
-        headers: {
-            // 'x-rapidapi-host': 'twinword-word-association-quiz.p.rapidapi.com',
-            // 'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY
-        }
     }
 
     axios.request(options).then((response) => {
@@ -153,22 +112,18 @@ app.get('/cityAPI', (req, res) => {
         console.error(error)
     })
 
-    createListing(client, {
+    createListing({
         city: passedCity,
     })
 })
 
 
+//3d Forecast API Call
 app.get('/forecastAPI', (req, res) => {
     const passedCity = req.query.city;
     const options = {
         method: 'GET',
         url: 'http://api.weatherapi.com/v1/forecast.json?key=d5ccf290643547b2aa3190009220604&q=' + passedCity + '&days=7&aqi=no&alerts=no',
-        // params: {level: 'Toronto', area: 'sat'},
-        headers: {
-            // 'x-rapidapi-host': 'twinword-word-association-quiz.p.rapidapi.com',
-            // 'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY
-        }
     }
 
     axios.request(options).then((response) => {
@@ -179,21 +134,18 @@ app.get('/forecastAPI', (req, res) => {
         console.error(error)
     })
 
-    createListing(client, {
+    createListing({
         city: passedCity,
     })
 })
 
+
+//Hourly Forecast API Call
 app.get('/hourlyForecast', (req, res) => {
     const passedCity = req.query.city;
     const options = {
         method: 'GET',
         url: 'http://api.weatherapi.com/v1/forecast.json?key=d5ccf290643547b2aa3190009220604&q=' + passedCity + '&days=1&aqi=no&alerts=no',
-        // params: {level: 'Toronto', area: 'sat'},
-        headers: {
-            // 'x-rapidapi-host': 'twinword-word-association-quiz.p.rapidapi.com',
-            // 'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY
-        }
     }
 
     axios.request(options).then((response) => {
@@ -204,15 +156,10 @@ app.get('/hourlyForecast', (req, res) => {
         console.error(error)
     })
 
-    createListing(client, {
+    createListing({
         city: passedCity,
     })
 })
-
-
-
-
-
 
 
 const PORT = 3001

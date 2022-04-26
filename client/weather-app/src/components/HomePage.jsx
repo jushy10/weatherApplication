@@ -9,17 +9,22 @@ constructor() {
 	this.state = {
         isSubmitted: false
 	};
+    
 }
 
 
 handleInputChange(cityName) {
-	window.localStorage.setItem('cityName', JSON.stringify(cityName))
+    //Set input to session storage of browser
+	sessionStorage.setItem('cityName', JSON.stringify(cityName))
 }
 
 
 async componentDidMount() {
+    //Checks if there is a current input in local storage
 	if (this.props.cityInput !== null) {
+        //If there is set it to a prop
 		await this.setState({ city: this.props.cityInput });
+        //API Call
 		this.forecastAPI();
 	}
     this.setState({isSubmitted: true})
@@ -29,7 +34,8 @@ async componentDidMount() {
 async forecastAPI() {
 	const options = {
 		method: 'GET',
-		url: 'http://localhost:3001/cityAPI', //Backend Pull
+        
+		url: 'http://localhost:3001/cityAPI', //Backend Call
 		params: { city: this.state.city },
 	}
 
@@ -40,7 +46,7 @@ async forecastAPI() {
 	.catch(function (error) {
 		console.log(error);
 	});
-
+    //Setting states for json info
     this.setState({city: data.cityName + ' '});
     this.setState({temp: data.currentTemp + '°C'});
     this.setState({condition: data.condition});
@@ -52,17 +58,30 @@ async forecastAPI() {
     this.setState({region: data.region});
 }
 
+//Submission of search bar
 handleSubmit = (e) => {
-
-    this.setState({isSubmitted: true})
+    //Regex for Search bar
+    const regex = new RegExp(`^[a-zA-Z\\s]+$`);
 	e.preventDefault();
-	this.forecastAPI();
-	this.handleInputChange(this.state.city);
-    
+    if (regex.test(this.state.city)) {
 
+
+        this.setState({isSubmitted: true})
+        this.forecastAPI();
+        this.handleInputChange(this.state.city);
+    }
+    else {
+        alert("Input Incorrect \nEx: Toronto");
+		sessionStorage.clear();
+    }
+    
 }
 
+
+//Every change in the search bar
 everyChange = (e) => {
+    //Saving input down from user
+    
 	this.setState({ city: e.target.value });
     this.setState({isSubmitted: false})
 }
@@ -75,7 +94,7 @@ render() {
                 <form onSubmit={this.handleSubmit}>
                     <input onChange={this.everyChange} placeholder="Enter Location"></input>
                 </form>
-                {this.state.isSubmitted &&
+                {this.state.isSubmitted && this.state.city !== '' &&
                 <div className='container_homepage'>
                     <div className='top'>
                         <div className='location'>

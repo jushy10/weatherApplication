@@ -15,21 +15,23 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-        city: JSON.parse(window.localStorage.getItem('cityName')) || ''
+        //Sets state of session storage 
+        city: JSON.parse(sessionStorage.getItem('cityName')) || '',
     }
 }
-
+  //Func for other components to call to update city input
   changeCity(cityName){
-    window.localStorage.setItem('cityName', JSON.stringify(cityName))
+	sessionStorage.clear();
+    sessionStorage.setItem('cityName', JSON.stringify(cityName))
     this.setState({city: cityName});
   }
-
 
 
   render() {
     return (
       <>
       <div>
+
       <Navbar className="navtop" bg="dark" variant="dark">
         <Navbar.Brand className="title" href="/homepage">Weather App</Navbar.Brand>
         <Nav className="me-auto">
