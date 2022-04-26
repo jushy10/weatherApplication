@@ -42,10 +42,11 @@ class History extends Component {
             <br></br><br></br>
             <center><h1 >10 Recent Unique Searches</h1></center>
             <br></br>
-            <div className = "history">
+            <div className = "historyBubble">
             {this.state.dataArray && this.state.dataArray.map((data => (
-                <button type="button" onClick={(e) => this.buttonInput(e.currentTarget.value)} value={data}>{data}</button>
-
+                <div>
+                <button type="button" onClick={(e) => this.buttonInput(e.currentTarget.value)} value={data}><p>{data}</p></button>
+                <br></br></div>
                 // <h2>{data}</h2>
             )))}
             </div>
