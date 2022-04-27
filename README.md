@@ -10,9 +10,15 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
-
 # In the project directory:
+
+https://nodejs.org/en/download/
+
+Install LTS Node JS version for your computer
+
+Restart Computer After Installation
+
+When you run project for the first time, Allow Node JS access to Windows Firewall
 
 # To Run Front End:
 
