@@ -21,7 +21,7 @@ Install LTS Node JS version for your computer
 
 Restart Computer After Installation
 
-When you run project for the first time, Allow Node JS access to Windows Firewall
+When you run Node JS for the first time, Allow Node JS access to Windows Firewall
 
 # To Run Front End:
 
