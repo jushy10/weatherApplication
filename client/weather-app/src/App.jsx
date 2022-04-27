@@ -21,7 +21,7 @@ class App extends Component {
 }
   //Func for other components to call to update city input
   changeCity(cityName){
-	sessionStorage.clear();
+	  sessionStorage.clear();
     sessionStorage.setItem('cityName', JSON.stringify(cityName))
     this.setState({city: cityName});
   }
