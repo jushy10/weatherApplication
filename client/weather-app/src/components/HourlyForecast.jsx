@@ -7,6 +7,7 @@ import { Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "../styles/hourlyforecast.css"
 
+
 class HourlyForecast extends Component {
 constructor() {
 	super();
