@@ -6,6 +6,9 @@
 | Adyan Reza     | [AdyanReza](https://github.com/AdyanReza)         |
 | Evan Curtis    | [evan-curtis](https://github.com/evan-curtis)     |
 
+# Link to Independent Study:
+https://docs.google.com/presentation/d/1h85dBDig6wmonv2gP7vMnWqfeLf-Yg7c8UaYJE51Udw/edit?usp=sharing
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
